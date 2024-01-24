@@ -1,7 +1,7 @@
-"use client";
-
 import React from "react";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 export default function Providers({ children }: React.PropsWithChildren) {
-  return children;
+  return <ClerkProvider>{children}</ClerkProvider>;
 }

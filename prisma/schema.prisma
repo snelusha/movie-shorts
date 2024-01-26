@@ -8,12 +8,12 @@ generator client {
 }
 
 model User {
-  id         String   @unique
+  id         String    @unique
   name       String
-  email      String   @unique
+  email      String    @unique
   role       String
-  created_at DateTime
-  updated_at DateTime
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
 }
 
 model Movie {
@@ -24,45 +24,60 @@ model Movie {
   release_date DateTime
 
   director_id String
-  director    Director @relation(fields: [director_id], references: [id])
+  director    Director  @relation(fields: [director_id], references: [id])
+  created_at  DateTime? @default(now())
 
   categories   Category[]
   cast_members CastMember[]
-  Role         Role[]
+  roles        Role[]
 }
 
 model Category {
-  id       String @id @default(cuid())
-  name     String
-  movie_id String
+  id         String    @id @default(cuid())
+  name       String
+  movie_id   String
+  created_at DateTime? @default(now())
 
-  Movie Movie @relation(fields: [movie_id], references: [id])
+  movie Movie @relation(fields: [movie_id], references: [id])
 }
 
 model Director {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   name       String
   image      String
   country    String
-  created_at DateTime
+  created_at DateTime? @default(now())
 
-  Movies Movie[]
+  movies Movie[]
+}
+
+model Actor {
+  id         String    @id @default(cuid())
+  name       String
+  image      String
+  country    String
+  created_at DateTime? @default(now())
+
+  CastMember CastMember[]
 }
 
 model CastMember {
-  id       String @id @default(cuid())
-  name     String
-  roles    Role[]
-  movie_id String
+  id String @id @default(cuid())
 
-  Movie Movie @relation(fields: [movie_id], references: [id])
+  actor_id String
+  actor    Actor  @relation(fields: [actor_id], references: [id])
+  roles    Role[]
+
+  movie_id String
+  movie    Movie  @relation(fields: [movie_id], references: [id])
 }
 
 model Role {
-  id             String @id @default(cuid())
+  id             String    @id @default(cuid())
   character      String
   movie_id       String
   cast_member_id String
+  created_at     DateTime? @default(now())
 
   movie       Movie      @relation(fields: [movie_id], references: [id])
   cast_member CastMember @relation(fields: [cast_member_id], references: [id])

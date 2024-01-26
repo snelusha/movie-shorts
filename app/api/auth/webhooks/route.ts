@@ -42,7 +42,7 @@ export async function POST(request: Request) {
         const createdUser = event.data as UserJSON;
         await prisma.user.create({
           data: {
-            user_id: createdUser.id,
+            id: createdUser.id,
             email: createdUser.email_addresses[0].email_address,
             name: `${createdUser.first_name} ${createdUser.last_name}`.trim(),
             role: "user",
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
         const updatedUser = event.data as UserJSON;
         await prisma.user.update({
           where: {
-            user_id: updatedUser.id,
+            id: updatedUser.id,
           },
           data: {
             email: updatedUser.email_addresses[0].email_address,
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         const deletedUser = event.data as DeletedObjectJSON;
         await prisma.user.delete({
           where: {
-            user_id: deletedUser.id,
+            id: deletedUser.id,
           },
         });
         break;

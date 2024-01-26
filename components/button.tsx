@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";
-  type?: "primary" | "secondary" | "outline";
+  type?: "primary" | "secondary" | "outline" | "ghost";
   icon?: icons;
   href?: string;
   reverse?: boolean;
@@ -50,6 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "text-secondary hover:text-secondary-dark bg-primary-dark hover:bg-muted border-transparent",
       outline:
         "text-secondary hover:text-secondary-dark bg-transparent border border-muted",
+      ghost: "text-secondary hover:text-secondary-dark bg-transparent border-transparent",
     };
 
     const classes = cn(
@@ -72,14 +73,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <Icon
             className={cn(
               children && (reverse ? "ml-4" : "mr-4"),
-              "w-4 h-4 animate-spin"
+              "w-4 h-4 text-inherit animate-spin"
             )}
-            name="bolt"
+            name={icon || "spinner"}
           />
         ) : (
           icon && (
             <Icon
-              className={cn(children && (reverse ? "ml-4" : "mr-4"), "w-4 h-4")}
+              className={cn(children && (reverse ? "ml-4" : "mr-4"), "w-4 h-4 text-inherit")}
               name={icon}
             />
           )

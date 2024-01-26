@@ -8,10 +8,62 @@ generator client {
 }
 
 model User {
-  user_id       String    @unique
-  name          String
-  email         String    @unique
-  role          String
-  created_at    DateTime
-  updated_at    DateTime
+  id         String   @unique
+  name       String
+  email      String   @unique
+  role       String
+  created_at DateTime
+  updated_at DateTime
+}
+
+model Movie {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  summary      String
+  release_date DateTime
+
+  director_id String
+  director    Director @relation(fields: [director_id], references: [id])
+
+  categories   Category[]
+  cast_members CastMember[]
+  Role         Role[]
+}
+
+model Category {
+  id       String @id @default(cuid())
+  name     String
+  movie_id String
+
+  Movie Movie @relation(fields: [movie_id], references: [id])
+}
+
+model Director {
+  id         String   @id @default(cuid())
+  name       String
+  image      String
+  country    String
+  created_at DateTime
+
+  Movies Movie[]
+}
+
+model CastMember {
+  id       String @id @default(cuid())
+  name     String
+  roles    Role[]
+  movie_id String
+
+  Movie Movie @relation(fields: [movie_id], references: [id])
+}
+
+model Role {
+  id             String @id @default(cuid())
+  character      String
+  movie_id       String
+  cast_member_id String
+
+  movie       Movie      @relation(fields: [movie_id], references: [id])
+  cast_member CastMember @relation(fields: [cast_member_id], references: [id])
 }

@@ -61,11 +61,11 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
 
   const closeModal = () => {
     setSelectedDirector(null);
+    reset();
     setOpen(false);
   };
 
   const onSubmit = async (data: Inputs) => {
-    console.log("submit");
     if (selectedDirector) {
       await updateDirector({
         id: selectedDirector.id,
@@ -83,7 +83,6 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
       });
     }
     closeModal();
-    reset();
     router.refresh();
   };
 

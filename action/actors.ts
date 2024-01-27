@@ -4,6 +4,10 @@ import prisma from "@/lib/db";
 
 import type { Actor } from "@prisma/client";
 
+export async function getActors() {
+  return await prisma.actor.findMany();
+}
+
 export async function createActor(actor: Omit<Actor, "id">) {
   return await prisma.actor.create({
     data: actor,

@@ -61,11 +61,11 @@ export default function ActorsList({ actors }: ActorsListProps) {
 
   const closeModal = () => {
     setSelectedActor(null);
+    reset()
     setOpen(false);
   };
 
   const onSubmit = async (data: Inputs) => {
-    console.log("submit");
     if (selectedActor) {
       await updateActor({
         id: selectedActor.id,
@@ -83,7 +83,6 @@ export default function ActorsList({ actors }: ActorsListProps) {
       });
     }
     closeModal();
-    reset();
     router.refresh();
   };
 

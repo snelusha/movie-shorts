@@ -17,16 +17,17 @@ model User {
 }
 
 model Movie {
-  id           String   @id @default(cuid())
-  title        String
-  description  String
-  summary      String
-  image        String
-  cover_image  String
-  release_date DateTime
+  id            String @id @default(cuid())
+  title         String
+  description   String
+  summary       String
+  image         String
+  cover_image   String
+  released_year Int
+  runtime       Int
 
   director_id String
-  director    Director  @relation(fields: [director_id], references: [id])
+  director    Director  @relation(fields: [director_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at  DateTime? @default(now())
 
   cast_members CastMember[]
@@ -56,9 +57,9 @@ model CastMember {
   id String @id @default(cuid())
 
   actor_id  String
-  actor     Actor  @relation(fields: [actor_id], references: [id])
+  actor     Actor  @relation(fields: [actor_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   character String
 
   movie_id String
-  movie    Movie  @relation(fields: [movie_id], references: [id])
+  movie    Movie  @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

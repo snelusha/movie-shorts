@@ -28,12 +28,12 @@ import Input from "@/components/input";
 
 import moment from "moment";
 
-import type { Director } from "@prisma/client";
+import type { Actor } from "@prisma/client";
 
-import { createDirector, deleteDirector, updateDirector } from "@/action/directors";
+import { createActor, deleteActor, updateActor } from "@/action/actors";
 
-interface DirectorsListProps {
-  directors?: Director[];
+interface ActorsListProps {
+  actors?: Actor[];
 }
 
 type Inputs = {
@@ -42,40 +42,40 @@ type Inputs = {
   image: string;
 };
 
-export default function DirectorsList({ directors }: DirectorsListProps) {
+export default function ActorsList({ actors }: ActorsListProps) {
   const router = useRouter();
 
   const [open, setOpen] = React.useState(false);
-  const [selectedDirector, setSelectedDirector] = React.useState<Director | null>(null);
+  const [selectedActor, setSelectedActor] = React.useState<Actor | null>(null);
 
   const { register, handleSubmit, reset, setValue } = useForm<Inputs>();
 
-  const openModal = (director?: Director) => {
-    if (director) {
-      setSelectedDirector(director);
+  const openModal = (actor?: Actor) => {
+    if (actor) {
+      setSelectedActor(actor);
     } else {
-      setSelectedDirector(null);
+      setSelectedActor(null);
     }
     setOpen(true);
   };
 
   const closeModal = () => {
-    setSelectedDirector(null);
+    setSelectedActor(null);
     setOpen(false);
   };
 
   const onSubmit = async (data: Inputs) => {
     console.log("submit");
-    if (selectedDirector) {
-      await updateDirector({
-        id: selectedDirector.id,
+    if (selectedActor) {
+      await updateActor({
+        id: selectedActor.id,
         name: data.name,
         country: data.country,
         image: data.image,
         created_at: new Date(),
       });
     } else {
-      await createDirector({
+      await createActor({
         name: data.name,
         country: data.country,
         image: data.image,
@@ -88,40 +88,40 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
   };
 
   const handleDelete = async () => {
-    if (!selectedDirector) return;
-    await deleteDirector(selectedDirector.id);
+    if (!selectedActor) return;
+    await deleteActor(selectedActor.id);
     closeModal();
     router.refresh();
   };
 
   React.useEffect(() => {
-    if (selectedDirector) {
-      setValue("name", selectedDirector.name);
-      setValue("country", selectedDirector.country);
-      setValue("image", selectedDirector.image);
+    if (selectedActor) {
+      setValue("name", selectedActor.name);
+      setValue("country", selectedActor.country);
+      setValue("image", selectedActor.image);
     }
-  }, [selectedDirector]);
+  }, [selectedActor]);
 
   return (
     <>
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold">Directors</h1>
+            <h1 className="text-2xl font-bold">Actors</h1>
             <p className="text-sm text-secondary-light">
-              You can see all directors
+              You can see all actors
             </p>
           </div>
           <Button type="secondary" icon="plus" onClick={() => openModal()}>
-            Add Director
+            Add Actor
           </Button>
         </div>
         <div className="w-full mt-10">
-          {!directors || directors.length === 0 ? (
+          {!actors || actors.length === 0 ? (
             <p className="text-sm font-medium text-secondary-light text-center mt-10">
-              No directors yet!
+              No actors yet!
               <br />
-              Just click plus to create a new director!
+              Just click plus to create a new actor!
             </p>
           ) : (
             <div className="w-full rounded-md border border-muted-dark">
@@ -135,30 +135,30 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {directors.map((director) => (
-                    <TableRow key={director.id}>
+                  {actors.map((actor) => (
+                    <TableRow key={actor.id}>
                       <TableCell className="pl-8">
                         <div className="w-10 h-10">
                           <img
                             className="w-full h-full object-cover rounded-full"
-                            src={director.image}
+                            src={actor.image}
                           />
                         </div>
                       </TableCell>
                       <TableCell className="text-nowrap">
-                        {director.name}
+                        {actor.name}
                       </TableCell>
                       <TableCell className="text-nowrap">
-                        {director.country}
+                        {actor.country}
                       </TableCell>
                       <TableCell className="text-nowrap">
-                        {moment(new Date(director.created_at!)).format("LLL")}
+                        {moment(new Date(actor.created_at!)).format("LLL")}
                       </TableCell>
                       <TableCell>
                         <Button
                           type="ghost"
                           icon="ellipsis_vertical"
-                          onClick={() => openModal(director)}
+                          onClick={() => openModal(actor)}
                         />
                       </TableCell>
                     </TableRow>
@@ -179,10 +179,10 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>
-              {!selectedDirector ? "Add new director" : "Edit director"}
+              {!selectedActor ? "Add new actor" : "Edit actor"}
             </DialogTitle>
             <DialogDescription className="text-xs text-secondary-light">
-              Make changes to the director and click save when you are done.
+              Make changes to the actor and click save when you are done.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={(e) => e.preventDefault()}>
@@ -219,7 +219,7 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
               </div>
             </div>
             <DialogFooter className="mt-6">
-              {selectedDirector && (
+              {selectedActor && (
                 <Button type="secondary" onClick={handleDelete}>
                   Delete
                 </Button>

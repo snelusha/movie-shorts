@@ -21,24 +21,15 @@ model Movie {
   title        String
   description  String
   summary      String
+  image        String
+  cover_image  String
   release_date DateTime
 
   director_id String
   director    Director  @relation(fields: [director_id], references: [id])
   created_at  DateTime? @default(now())
 
-  categories   Category[]
   cast_members CastMember[]
-  roles        Role[]
-}
-
-model Category {
-  id         String    @id @default(cuid())
-  name       String
-  movie_id   String
-  created_at DateTime? @default(now())
-
-  movie Movie @relation(fields: [movie_id], references: [id])
 }
 
 model Director {
@@ -64,21 +55,10 @@ model Actor {
 model CastMember {
   id String @id @default(cuid())
 
-  actor_id String
-  actor    Actor  @relation(fields: [actor_id], references: [id])
-  roles    Role[]
+  actor_id  String
+  actor     Actor  @relation(fields: [actor_id], references: [id])
+  character String
 
   movie_id String
   movie    Movie  @relation(fields: [movie_id], references: [id])
-}
-
-model Role {
-  id             String    @id @default(cuid())
-  character      String
-  movie_id       String
-  cast_member_id String
-  created_at     DateTime? @default(now())
-
-  movie       Movie      @relation(fields: [movie_id], references: [id])
-  cast_member CastMember @relation(fields: [cast_member_id], references: [id])
 }

@@ -46,6 +46,9 @@ export async function POST(request: Request) {
             email: createdUser.email_addresses[0].email_address,
             name: `${createdUser.first_name} ${createdUser.last_name}`.trim(),
             role: "user",
+            image:
+              createdUser.image_url ||
+              "https://vercel.com/api/www/avatar/VvXRSBw39vBtBZXUAGxD4rA9?&s=64",
             created_at: new Date(createdUser.created_at),
             updated_at: new Date(createdUser.updated_at),
           },
@@ -60,6 +63,9 @@ export async function POST(request: Request) {
           data: {
             email: updatedUser.email_addresses[0].email_address,
             name: `${updatedUser.first_name} ${updatedUser.last_name}`.trim(),
+            image:
+              updatedUser.image_url ||
+              "https://vercel.com/api/www/avatar/VvXRSBw39vBtBZXUAGxD4rA9?&s=64",
             updated_at: new Date(updatedUser.updated_at),
           },
         });

@@ -3,7 +3,7 @@
 import React from "react";
 
 import { useRouter } from "next/navigation";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, set } from "react-hook-form";
 
 import Button from "@/components/button";
 import Input from "@/components/input";
@@ -45,6 +45,7 @@ type Inputs = {
   cover: string;
   description: string;
   summary: string;
+  categories: string;
   cast_members: {
     id?: string;
     actor_id: string | null;
@@ -60,7 +61,7 @@ export default function MovieClient({
   movie,
 }: MovieClientProps) {
   const router = useRouter();
-  const { register, handleSubmit, reset, setValue, watch, control } =
+  const { register, handleSubmit, setValue, watch, control } =
     useForm<Inputs>();
   const {
     fields: cast_members,
@@ -85,6 +86,7 @@ export default function MovieClient({
         cover_image: data.cover,
         description: data.description,
         summary: data.summary,
+        categories: data.categories,
         created_at: new Date(),
       });
       // @ts-ignore
@@ -101,6 +103,7 @@ export default function MovieClient({
         cover_image: data.cover,
         description: data.description,
         summary: data.summary,
+        categories: data.categories,
         created_at: null,
       });
       await deleteCastMembers(movie.id);
@@ -108,7 +111,6 @@ export default function MovieClient({
       // @ts-ignore
       await createCastMembers(movie.id, data.cast_members);
     }
-    reset();
     router.replace("/dashboard/movies");
     router.refresh();
   };
@@ -116,7 +118,6 @@ export default function MovieClient({
   const handleDelete = async () => {
     if (!movie) return;
     await deleteMovie(movie.id);
-    reset();
     router.replace("/dashboard/movies");
     router.refresh();
   };
@@ -131,6 +132,7 @@ export default function MovieClient({
       setValue("cover", movie.cover_image);
       setValue("description", movie.description);
       setValue("summary", movie.summary);
+      setValue("categories", movie.categories);
 
       setValue("cast_members", movie.cast_members);
     }
@@ -147,7 +149,7 @@ export default function MovieClient({
                 Title
               </label>
               <Input
-                placeholder="Prawegaya"
+                placeholder="Avengers: Endgame"
                 {...register("title", { required: true })}
               />
             </div>
@@ -243,6 +245,18 @@ export default function MovieClient({
               placeholder="Just summarize the movie!"
               {...register("summary", { required: true })}
             />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="text-xs font-medium text-secondary-light">
+              Categories
+            </label>
+            <Input
+              placeholder="Action, Adventure, Comedy"
+              {...register("categories", { required: true })}
+            />
+            <p className="text-xs text-secondary-light">
+              Note: Separate each category with a comma (,)
+            </p>
           </div>
         </div>
       </div>

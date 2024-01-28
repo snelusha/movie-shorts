@@ -192,7 +192,7 @@ export default function ActorsList({ actors }: ActorsListProps) {
                 </label>
                 <Input
                   className="max-w-[300px] w-full rounded-md border border-muted-dark p-2 ml-6"
-                  placeholder="Ranjan Ramanayake"
+                  placeholder="Actor"
                   {...register("name", { required: true })}
                 />
               </div>

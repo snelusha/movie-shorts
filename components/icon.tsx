@@ -10,9 +10,11 @@ import {
   CheckIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
   EllipsisHorizontalIcon,
   LinkIcon,
   MagnifyingGlassIcon,
+  PaperAirplaneIcon,
   PlusIcon,
   SparklesIcon,
   TrashIcon,
@@ -107,6 +109,7 @@ function Spinner({ ...props }) {
 
 const icons = {
   academic_cap: AcademicCapIcon,
+  paper_airplane: PaperAirplaneIcon,
   arrow_down: ArrowDownIcon,
   arrow_left: ArrowLeftIcon,
   arrow_right: ArrowRightIcon,
@@ -116,6 +119,7 @@ const icons = {
   check_mark: CheckIcon,
   chevron_down: ChevronDownIcon,
   chevron_left: ChevronLeftIcon,
+  chevron_right: ChevronRightIcon,
   ellipsis_vertical: EllipsisHorizontalIcon,
   github: GithubIcon,
   link: LinkIcon,

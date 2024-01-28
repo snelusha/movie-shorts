@@ -8,18 +8,18 @@ import prisma from "@/lib/db";
 
 interface PageProps {
   params: {
-    movie: string;
+    movie_id: string;
   };
 }
 
-export default async function Page({ params: { movie } }: PageProps) {
+export default async function Page({ params: { movie_id } }: PageProps) {
   const directors = await prisma.director.findMany();
   const actors = await prisma.actor.findMany();
 
-  const create = movie === "create";
-  const dbMovie = await prisma.movie.findUnique({
+  const create = movie_id === "create";
+  const movie = await prisma.movie.findUnique({
     where: {
-      id: movie,
+      id: movie_id,
     },
     include: {
       director: true,
@@ -27,12 +27,12 @@ export default async function Page({ params: { movie } }: PageProps) {
     },
   });
 
-  if (!dbMovie && !create) return notFound();
+  if (!movie && !create) return notFound();
 
   const formattedMovie = {
-    ...dbMovie,
-    director: dbMovie?.director,
-    cast_members: dbMovie?.cast_members,
+    ...movie,
+    director: movie?.director,
+    cast_members: movie?.cast_members,
   };
 
   return (

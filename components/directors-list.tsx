@@ -30,7 +30,11 @@ import moment from "moment";
 
 import type { Director } from "@prisma/client";
 
-import { createDirector, deleteDirector, updateDirector } from "@/action/directors";
+import {
+  createDirector,
+  deleteDirector,
+  updateDirector,
+} from "@/action/directors";
 
 interface DirectorsListProps {
   directors?: Director[];
@@ -46,7 +50,8 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
   const router = useRouter();
 
   const [open, setOpen] = React.useState(false);
-  const [selectedDirector, setSelectedDirector] = React.useState<Director | null>(null);
+  const [selectedDirector, setSelectedDirector] =
+    React.useState<Director | null>(null);
 
   const { register, handleSubmit, reset, setValue } = useForm<Inputs>();
 
@@ -192,7 +197,7 @@ export default function DirectorsList({ directors }: DirectorsListProps) {
                 </label>
                 <Input
                   className="max-w-[300px] w-full rounded-md border border-muted-dark p-2 ml-6"
-                  placeholder="Ranjan Ramanayake"
+                  placeholder="Director"
                   {...register("name", { required: true })}
                 />
               </div>

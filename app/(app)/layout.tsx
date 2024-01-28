@@ -12,7 +12,7 @@ export default async function Layout({ children }: React.PropsWithChildren) {
   const { userId } = auth();
   const user = await prisma.user.findUnique({
     where: {
-      id: userId!,
+      id: userId || "",
     },
   });
 
